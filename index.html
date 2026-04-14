@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>東京経済大学 体育会ヨット部</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #ffffff;
+      color: #333;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ===== Color Variables ===== */
+    :root {
+      --primary: #4FC3F7;
+      --primary-dark: #0390d6;
+      --primary-light: #E1F5FE;
+      --accent: #FFD54F;
+      --accent-dark: #FFC107;
+      --accent-light: #FFF8E1;
+      --text: #2c3e50;
+      --text-light: #607D8B;
+      --white: #ffffff;
+      --gray-bg: #fbfcfd;
+      --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    /* ===== Header / Navigation ===== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid rgba(79, 195, 247, 0.2);
+      transition: all 0.3s ease;
+    }
+    .header.scrolled {
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--primary-dark);
+    }
+    .logo-text span {
+      display: block;
+      font-size: 0.6rem;
+      font-weight: 500;
+      color: var(--text-light);
+      font-family: 'Noto Sans JP', sans-serif;
+      letter-spacing: 0.05em;
+      margin-top: 2px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      position: relative;
+      padding: 4px 0;
+      transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent-dark);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--primary-dark); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--primary-dark) !important;
+      color: white !important;
+      padding: 10px 24px !important;
+      border-radius: 50px !important;
+      font-weight: 600 !important;
+      transition: transform 0.3s, box-shadow 0.3s !important;
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(3, 144, 214, 0.3);
+    }
+    .nav-cta::after { display: none !important; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.3s;
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ===== Hero ===== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      overflow: hidden;
+      background: #ffffff;
+      padding: 120px 0 100px 48px;
+      max-width: 1400px;
+      margin: 0 auto;
+      gap: 48px;
+    }
+    .hero-left {
+      flex: 1;
+      min-width: 0;
+      animation: fadeInUp 0.8s ease both;
+    }
+    .hero-right {
+      flex: 1;
+      min-width: 0;
+      padding-top: 20px;
+      animation: fadeInUp 0.8s ease 0.3s both;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent-dark);
+      color: #ffffff;
+      padding: 6px 18px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+    }
+    .hero-univ-name {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+      border-left: 5px solid var(--primary-dark);
+      padding-left: 16px;
+      line-height: 1.4;
+    }
+    .univ-br { display: none; }
+    @media (max-width: 600px) {
+      .univ-br { display: block; }
+    }
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 0;
+      letter-spacing: -0.02em;
+    }
+    .hero-title .title-accent {
+      color: var(--primary-dark);
+    }
+    .hero-divider {
+      width: 48px;
+      height: 3px;
+      background: var(--accent-dark);
+      margin: 24px 0;
+    }
+    .hero-catchcopy {
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 20px;
+      letter-spacing: 0.05em;
+    }
+    .hero-catchcopy em {
+      font-style: normal;
+      color: var(--text);
+      position: relative;
+    }
+    .hero-catchcopy em::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: var(--accent);
+      opacity: 0.5;
+      border-radius: 4px;
+      z-index: -1;
+    }
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 36px;
+      line-height: 1.9;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    /* Hero Slideshow */
+    .hero-slideshow {
+      position: relative;
+      border-radius: 0 20px 20px 0;
+      overflow: hidden;
+      aspect-ratio: 5 / 4;
+      background: #e8f4fd;
+    }
+    .hero-slideshow::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 80px;
+      background: linear-gradient(to right, #ffffff, transparent);
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* Floating yacht animation */
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .hero-slide.active {
+      opacity: 1;
+    }
+    .hero-slide-icon {
+      font-size: 5rem;
+      margin-bottom: 12px;
+    }
+    .hero-slide-caption {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+    .hero-slide:nth-child(1) { background: #dff0fb; }
+    .hero-slide:nth-child(2) { background: #d4ecf9; }
+    .hero-slide:nth-child(3) { background: #e3f2fd; }
+    .hero-slide:nth-child(4) { background: #d9eef9; }
+    .slideshow-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .slideshow-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #d0d8e0;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+      padding: 0;
+    }
+    .slideshow-dot.active {
+      background: var(--primary-dark);
+      width: 28px;
+      border-radius: 5px;
+    }
+    .hero-slide-note {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--primary-dark);
+      color: white;
+      box-shadow: 0 4px 16px rgba(3, 144, 214, 0.25);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(3, 144, 214, 0.35);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary-dark);
+    }
+    .btn-outline:hover {
+      background: var(--primary-light);
+      transform: translateY(-3px);
+    }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-light);
+      font-size: 0.7rem;
+      animation: bounce 2s infinite;
+      letter-spacing: 0.1em;
+    }
+    .hero-scroll-hint .arrow {
+      width: 24px;
+      height: 24px;
+      border-right: 2px solid var(--primary-dark);
+      border-bottom: 2px solid var(--primary-dark);
+      transform: rotate(45deg);
+    }
+
+    /* ===== Section Common ===== */
+    .section {
+      padding: 100px 24px;
+    }
+    .section-alt {
+      background: var(--gray-bg);
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 0.95rem;
+    }
+    .yellow-line {
+      width: 100px;
+      height: 14px;
+      margin: 16px auto 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='14' viewBox='0 0 100 14'%3E%3Cpath d='M0 7 Q12.5 0 25 7 Q37.5 14 50 7 Q62.5 0 75 7 Q87.5 14 100 7' fill='none' stroke='%23FFC107' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+    /* ===== About ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .about-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .about-image {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: #f0f9ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-image-placeholder {
+      text-align: center;
+      padding: 40px;
+    }
+    .about-image-placeholder .sailing-icon {
+      font-size: 5rem;
+      margin-bottom: 16px;
+    }
+    .about-image-placeholder p {
+      color: var(--primary-dark);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    .about-image::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      right: -8px;
+      width: 80px;
+      height: 80px;
+      background: var(--accent);
+      border-radius: 12px;
+      z-index: -1;
+      opacity: 0.2;
+    }
+    .about-text h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .about-text h3 span {
+      color: var(--primary-dark);
+    }
+    .about-text p {
+      color: var(--text-light);
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .stat-card {
+      text-align: center;
+      padding: 20px 12px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+    .stat-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-dark);
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    /* ===== What's Yacht ===== */
+    .yacht-intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 48px;
+    }
+    .yacht-intro p {
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+    .yacht-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .feature-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 28px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent-dark);
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+    }
+    .feature-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 20px;
+      background: #f0f9ff;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+    .feature-card h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .feature-card p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    /* ===== Activity / Schedule ===== */
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .schedule-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px 20px;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s;
+      position: relative;
+    }
+    .schedule-card:hover { transform: translateY(-4px); }
+    .schedule-month {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: var(--primary-dark);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .schedule-card h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .schedule-card p {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+    .schedule-card.highlight {
+      background: white;
+      border: 2px solid var(--accent-dark);
+      color: var(--text);
+    }
+    .schedule-card.highlight .schedule-month { color: var(--accent-dark); }
+    .schedule-card.highlight p { color: var(--text-light); }
+
+    /* ===== Voices / Member ===== */
+    .voices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .voice-card {
+      background: white;
+      border-radius: 20px;
+      padding: 36px 28px;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s;
+    }
+    .voice-card:hover { transform: translateY(-4px); }
+    .voice-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .voice-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #f0f9ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .voice-name {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .voice-info {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+    .voice-card blockquote {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      position: relative;
+      padding-left: 16px;
+      border-left: 3px solid var(--accent-dark);
+    }
+
+    /* ===== FAQ ===== */
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .faq-item:hover { box-shadow: var(--shadow-hover); }
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 28px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      gap: 16px;
+      transition: background 0.3s;
+    }
+    .faq-question:hover { background: var(--gray-bg); }
+    .faq-q-label {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      color: var(--accent-dark);
+      margin-right: 12px;
+      font-size: 1.1rem;
+    }
+    .faq-toggle {
+      font-size: 1.4rem;
+      color: var(--accent-dark);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-toggle { transform: rotate(45deg); }
+    .faq-answer {
+      display: none;
+    }
+    .faq-item.open .faq-answer {
+      display: block;
+      padding: 0 28px 24px;
+    }
+    .faq-answer p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      padding-left: 36px;
+    }
+
+    /* ===== Gallery Slider ===== */
+    .gallery-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .gallery-slider {
+      flex: 1;
+      min-width: 0;
+      position: relative;
+    }
+    .gallery-card {
+      border-radius: 20px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+    .gallery-card.active {
+      opacity: 1;
+      position: relative;
+      pointer-events: auto;
+    }
+    .gallery-card-inner {
+      aspect-ratio: 16 / 10;
+      background: #f0f9ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+    }
+    .gallery-card:nth-child(even) .gallery-card-inner {
+      background: #f5f5f5;
+    }
+    .gallery-card-caption {
+      padding: 20px 24px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      text-align: center;
+    }
+    .gallery-arrow {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary-dark);
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.3s, color 0.3s;
+      line-height: 1;
+    }
+    .gallery-arrow:hover {
+      background: var(--primary-dark);
+      color: #ffffff;
+    }
+    .gallery-counter {
+      text-align: center;
+      margin-top: 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    /* ===== Access ===== */
+    .access-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .access-info {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+    }
+    .access-info h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #e8f4fd;
+    }
+    .access-detail {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+    .access-icon {
+      width: 40px;
+      height: 40px;
+      background: #f0f9ff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .access-detail-text h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .access-detail-text p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    .access-map {
+      border-radius: 20px;
+      overflow: hidden;
+      background: #f0f9ff;
+      aspect-ratio: 4 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+    }
+    .access-map-placeholder {
+      text-align: center;
+      color: var(--primary-dark);
+    }
+    .access-map-placeholder span { font-size: 3rem; display: block; margin-bottom: 12px; }
+
+    /* ===== CTA ===== */
+    .cta-section .container { position: relative; z-index: 1; }
+    .cta-section .hero-buttons {
+      justify-content: center;
+    }
+    .cta-section h2 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .cta-section p {
+      color: var(--text-light);
+      margin-bottom: 32px;
+      font-size: 1rem;
+    }
+    .btn-accent {
+      background: var(--primary-dark);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 4px 16px rgba(3, 144, 214, 0.25);
+    }
+    .btn-accent:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(3, 144, 214, 0.35);
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary-dark);
+    }
+    .btn-secondary:hover {
+      background: #f0f9ff;
+      transform: translateY(-3px);
+    }
+
+    /* ===== Footer ===== */
+    .footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .footer-brand h3 {
+      color: white;
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+    .footer-brand p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+    .footer-links h4 {
+      color: white;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+    .footer-links a {
+      display: block;
+      font-size: 0.85rem;
+      padding: 4px 0;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-sns {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .footer-sns a {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+    .footer-sns a:hover { background: var(--primary); }
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 24px auto 0;
+      text-align: center;
+      font-size: 0.75rem;
+    }
+
+    /* ===== Wave Decorations ===== */
+    .wave-divider {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      margin-top: -1px;
+    }
+    .wave-divider svg {
+      display: block;
+      width: 100%;
+      height: 80px;
+    }
+    .wave-divider-flip svg {
+      transform: scaleY(-1);
+    }
+    .wave-footer svg {
+      height: 120px;
+    }
+
+    /* Animated wave at hero bottom */
+    .hero-wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      z-index: 2;
+    }
+    .hero-wave svg {
+      display: block;
+      width: 100%;
+      height: 80px;
+    }
+
+    /* Floating bubbles decoration */
+    .ocean-bubbles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(79, 195, 247, 0.1);
+      animation: floatBubble 6s ease-in-out infinite;
+    }
+    .bubble:nth-child(1) { width: 280px; height: 280px; top: 10%; left: -2%; animation-delay: 0s; }
+    .bubble:nth-child(2) { width: 200px; height: 200px; top: 50%; right: 3%; animation-delay: 2s; }
+    .bubble:nth-child(3) { width: 150px; height: 150px; top: 30%; left: 60%; animation-delay: 4s; }
+    .bubble:nth-child(4) { width: 220px; height: 220px; bottom: 10%; left: 25%; animation-delay: 1s; }
+    .bubble:nth-child(5) { width: 100px; height: 100px; top: 70%; left: 50%; animation-delay: 3s; }
+    .bubble:nth-child(6) { width: 180px; height: 180px; top: 5%; right: 15%; animation-delay: 5s; }
+    @keyframes floatBubble {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+      50% { transform: translateY(-35px) scale(1.1); opacity: 1; }
+    }
+
+    /* Wave pattern background for alt sections */
+    .section-alt {
+      background: var(--gray-bg);
+      position: relative;
+    }
+    .section-alt::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='40' viewBox='0 0 200 40'%3E%3Cpath d='M0 20 Q50 5 100 20 Q150 35 200 20' fill='none' stroke='%234FC3F7' stroke-width='0.8' opacity='0.07'/%3E%3C/svg%3E");
+      background-size: 200px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .section-alt > * { position: relative; z-index: 1; }
+
+    /* Rope knot section title decoration */
+    .section-title::before {
+      content: '⚓';
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 4px;
+      opacity: 0.4;
+    }
+
+    /* Compass rose decoration for CTA */
+    .cta-section {
+      background: #ffffff;
+      padding: 80px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-top: none;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #f0f9ff;
+      z-index: 0;
+    }
+    .cta-section::after {
+      content: '🧭';
+      position: absolute;
+      top: 50%;
+      right: 5%;
+      transform: translateY(-50%);
+      font-size: 8rem;
+      opacity: 0.06;
+      z-index: 0;
+    }
+
+    /* Footer ocean feel */
+    .footer {
+      background: #0d1f2d;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 60px 24px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .footer::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='30' viewBox='0 0 200 30'%3E%3Cpath d='M0 15 Q50 5 100 15 Q150 25 200 15' fill='none' stroke='%234FC3F7' stroke-width='0.5' opacity='0.1'/%3E%3C/svg%3E");
+      background-size: 200px 30px;
+      background-position: bottom;
+      pointer-events: none;
+    }
+
+    /* Animated wave line under hero title */
+    .hero-wave-line {
+      width: 140px;
+      height: 18px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .hero-wave-line svg {
+      animation: waveMove 2.5s linear infinite;
+    }
+    @keyframes waveMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== Animations ===== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.98);
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+        z-index: 999;
+      }
+      .nav-links.open a { font-size: 1.2rem; }
+      .hamburger { display: flex; }
+
+      .hero {
+        flex-direction: column;
+        padding: 100px 40px 60px;
+        text-align: center;
+        align-items: center;
+      }
+      .hero-right { padding-top: 0; }
+      .hero-slideshow { border-radius: 16px; aspect-ratio: 4 / 3; }
+      .hero-slideshow::before { display: none; }
+      .hero-buttons { justify-content: center; }
+      .hero-univ-name {
+        border-left: none;
+        padding-left: 0;
+        text-align: center;
+        font-size: 1.5rem;
+        background: var(--primary-dark);
+        color: #ffffff;
+        display: block;
+        padding: 10px 24px;
+        border-radius: 6px;
+        letter-spacing: 0.15em;
+        margin-bottom: 16px;
+        width: 100%;
+      }
+      .hero-wave-line { margin: 20px auto; }
+      .hero-scroll-hint { left: 50%; transform: translateX(-50%); }
+      .hero-right { margin-bottom: 20px; }
+      .hero-scroll-hint { position: static; transform: none; margin-top: 16px; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .yacht-features { grid-template-columns: 1fr; }
+      .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+      .voices-grid { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .access-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 64px 40px; }
+      .about-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .stat-card { padding: 14px 8px; }
+      .stat-number { font-size: 1.5rem; }
+      .schedule-grid { grid-template-columns: 1fr; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .cta-section::after { display: none; }
+      .cta-section { padding: 64px 40px; }
+      .footer { padding: 60px 40px 32px; }
+      .gallery-wrapper {
+        flex-direction: column;
+        gap: 0;
+        position: relative;
+      }
+      .gallery-slider {
+        width: 100%;
+        order: 1;
+      }
+      .gallery-arrow {
+        position: absolute;
+        top: 35%;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        z-index: 3;
+        background: rgba(255,255,255,0.9);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      }
+      .gallery-prev { left: 8px; }
+      .gallery-next { right: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <div class="logo-text">
+          TKU SAILING CLUB
+          <span>東京経済大学 体育会ヨット部</span>
+        </div>
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#about">部の紹介</a>
+        <a href="#yacht">ヨットとは</a>
+        <a href="#schedule">年間予定</a>
+        <a href="#voices">部員の声</a>
+        <a href="#faq">Q&A</a>
+        <a href="#access">アクセス</a>
+        <a href="#contact" class="nav-cta">体験申込</a>
+      </nav>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="top">
+    <div class="hero-left">
+      <div class="hero-badge">2026年度 新入部員募集中</div>
+      <p class="hero-univ-name">東京経済大学<br class="univ-br"> 体育会ヨット部</p>
+      <h1 class="hero-title">
+        <span class="title-accent">SAIL INTO</span><br>
+        <span class="title-accent">THE FUTURE.</span>
+      </h1>
+      <div class="hero-wave-line">
+        <svg width="280" height="18" viewBox="0 0 280 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 9 Q17.5 0 35 9 Q52.5 18 70 9 Q87.5 0 105 9 Q122.5 18 140 9 Q157.5 0 175 9 Q192.5 18 210 9 Q227.5 0 245 9 Q262.5 18 280 9" stroke="#0390d6" stroke-width="3" fill="none"/>
+        </svg>
+      </div>
+      <p class="hero-catchcopy"><em>風</em>と共に、<em>仲間</em>と共に。</p>
+      <p class="hero-desc">初心者歓迎。大学からヨットを始めた部員がほとんど。<br>新しい自分に出会える4年間がここにあります。</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary">体験乗船に申し込む</a>
+        <a href="#about" class="btn btn-outline">まずは知る</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-slideshow" id="heroSlideshow">
+<div class="hero-slide active">
+          <div class="hero-slide-icon">⛵</div>
+          <p class="hero-slide-caption">海上での練習風景</p>
+        </div>
+        <div class="hero-slide">
+          <div class="hero-slide-icon">🌊</div>
+          <p class="hero-slide-caption">レース大会</p>
+        </div>
+        <div class="hero-slide">
+          <div class="hero-slide-icon">👥</div>
+          <p class="hero-slide-caption">チーム集合写真</p>
+        </div>
+        <div class="hero-slide">
+          <div class="hero-slide-icon">🏆</div>
+          <p class="hero-slide-caption">表彰式</p>
+        </div>
+      </div>
+      <div class="slideshow-dots" id="slideshowDots">
+        <button class="slideshow-dot active" onclick="goToSlide(0)"></button>
+        <button class="slideshow-dot" onclick="goToSlide(1)"></button>
+        <button class="slideshow-dot" onclick="goToSlide(2)"></button>
+        <button class="slideshow-dot" onclick="goToSlide(3)"></button>
+      </div>
+      <p class="hero-slide-note">※ 実際の活動写真に差し替えてください</p>
+    </div>
+    <div class="ocean-bubbles">
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- Wave: Hero → About -->
+  <div class="wave-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,20 C360,60 720,0 1080,40 C1260,55 1380,20 1440,30 L1440,60 L0,60 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+
+  <!-- ===== About ===== -->
+  <section class="section" id="about">
+    <div class="container fade-in">
+      <div class="section-header">
+        <p class="section-label">About Us</p>
+        <h2 class="section-title">東京経済大学ヨット部とは</h2>
+        <div class="yellow-line"></div>
+      </div>
+      <div class="about-grid">
+        <div class="about-image">
+          <div class="about-image-placeholder">
+            <div class="sailing-icon">⛵</div>
+            <p>活動風景の写真をここに配置</p>
+          </div>
+        </div>
+        <div class="about-text">
+          <h3>大学から始める<br><span>新しい挑戦</span>のカタチ</h3>
+          <p>東京経済大学ヨット部は、「全員が大学からのスタート」を強みに活動している体育会クラブです。経験ゼロからでも、4年間で全国大会を目指せる環境を整えています。</p>
+          <p>海の上で風を読み、仲間と協力しながら艇を操る。ヨットを通じて得られる経験は、就職活動や社会に出てからも大きな財産になります。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave: About → Yacht -->
+  <div class="wave-divider" style="background: #ffffff;">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 C240,5 480,50 720,25 C960,0 1200,45 1440,20 L1440,60 L0,60 Z" fill="var(--gray-bg)"/>
+    </svg>
+  </div>
+
+  <!-- ===== What's Yacht ===== -->
+  <section class="section section-alt" id="yacht">
+    <div class="container fade-in">
+      <div class="section-header">
+        <p class="section-label">What's Yacht</p>
+        <h2 class="section-title">ヨットの魅力</h2>
+        <div class="yellow-line"></div>
+      </div>
+      <div class="yacht-features">
+        <div class="feature-card">
+          <div class="feature-icon">🏄</div>
+          <h4>大学から始める人が<br>ほとんど！</h4>
+          <p>ヨット部に入る学生の大半が未経験者。高校までの経歴は関係ありません。スタートラインはみんな同じだから、努力次第で誰でも活躍できます。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌊</div>
+          <h4>自然の中で<br>心もリフレッシュ</h4>
+          <p>海の上で風を感じ、波を読む。普段の大学生活では味わえない非日常の体験が待っています。最高のストレス解消にもなります。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤝</div>
+          <h4>一生モノの<br>仲間ができる</h4>
+          <p>2人1組でレースに挑むヨット競技は、信頼関係が不可欠。苦楽を共にした仲間との絆は、卒業後もずっと続く宝物です。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave: Yacht → Schedule -->
+  <div class="wave-divider" style="background: var(--gray-bg);">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C360,10 720,50 1080,20 C1260,5 1380,35 1440,25 L1440,60 L0,60 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+
+  <!-- ===== Schedule ===== -->
+  <section class="section" id="schedule">
+    <div class="container fade-in">
+      <div class="section-header">
+        <p class="section-label">Annual Schedule</p>
+        <h2 class="section-title">年間スケジュール</h2>
+        <div class="yellow-line"></div>
+      </div>
+      <div class="schedule-grid">
+        <div class="schedule-card highlight">
+          <div class="schedule-month">Apr</div>
+          <h4>🌸 新歓期間</h4>
+          <p>体験乗船会・新入生歓迎イベント</p>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-month">May - Jun</div>
+          <h4>⛵ 春季練習</h4>
+          <p>基礎練習・春季レガッタ</p>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-month">Jul - Aug</div>
+          <h4>☀️ 夏合宿</h4>
+          <p>集中練習・夏季大会</p>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-month">Sep</div>
+          <h4>🏆 秋季大会</h4>
+          <p>関東学生ヨット選手権</p>
+        </div>
+        <div class="schedule-card highlight">
+          <div class="schedule-month">Oct - Nov</div>
+          <h4>🎌 全日本インカレ</h4>
+          <p>全国の舞台を目指す！</p>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-month">Dec</div>
+          <h4>🎄 納会・冬季練習</h4>
+          <p>1年の振り返り・オフトレ</p>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-month">Jan - Feb</div>
+          <h4>💪 冬季トレーニング</h4>
+          <p>体力作り・座学・整備</p>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-month">Mar</div>
+          <h4>🌅 春季レガッタ</h4>
+          <p>シーズン開幕・遠征</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave: Schedule → Voices -->
+  <div class="wave-divider" style="background: #ffffff;">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,20 C240,50 480,10 720,35 C960,55 1200,15 1440,40 L1440,60 L0,60 Z" fill="var(--gray-bg)"/>
+    </svg>
+  </div>
+
+  <!-- ===== Member Voices ===== -->
+  <section class="section section-alt" id="voices">
+    <div class="container fade-in">
+      <div class="section-header">
+        <p class="section-label">Member Voices</p>
+        <h2 class="section-title">部員の声</h2>
+        <div class="yellow-line"></div>
+      </div>
+      <div class="voices-grid">
+        <div class="voice-card">
+          <div class="voice-header">
+            <div class="voice-avatar">👨‍🎓</div>
+            <div>
+              <p class="voice-name">A.T さん</p>
+              <p class="voice-info">経済学部 3年 / スキッパー</p>
+            </div>
+          </div>
+          <blockquote>運動部に入るか迷っていましたが、体験乗船で「これだ！」と感じました。未経験でも1年でレースに出られるようになります。授業との両立もできていて、充実した大学生活を送れています。</blockquote>
+        </div>
+        <div class="voice-card">
+          <div class="voice-header">
+            <div class="voice-avatar">👩‍🎓</div>
+            <div>
+              <p class="voice-name">M.S さん</p>
+              <p class="voice-info">経営学部 2年 / クルー</p>
+            </div>
+          </div>
+          <blockquote>「ヨット？お金かかりそう…」と最初は思いましたが、全然そんなことなかったです。先輩が優しく教えてくれて、すぐに馴染めました。海の上は本当に気持ちいいです！</blockquote>
+        </div>
+        <div class="voice-card">
+          <div class="voice-header">
+            <div class="voice-avatar">👨‍🎓</div>
+            <div>
+              <p class="voice-name">K.Y さん</p>
+              <p class="voice-info">コミュニケーション学部 4年 / 主将</p>
+            </div>
+          </div>
+          <blockquote>ヨット部で培ったリーダーシップやチームワークは、就活でもかなり活きました。他のどの部活でも得られなかった経験ができたと自信を持って言えます。</blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave: Voices → FAQ -->
+  <div class="wave-divider" style="background: var(--gray-bg);">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,35 C360,5 720,55 1080,15 C1260,30 1380,10 1440,25 L1440,60 L0,60 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+
+  <!-- ===== FAQ ===== -->
+  <section class="section" id="faq">
+    <div class="container fade-in">
+      <div class="section-header">
+        <p class="section-label">FAQ</p>
+        <h2 class="section-title">よくある質問</h2>
+        <div class="yellow-line"></div>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <div><span class="faq-q-label">Q.</span>ヨット未経験でも大丈夫ですか？</div>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>もちろんです！部員のほぼ全員が大学からヨットを始めています。基礎から丁寧に教えるので、運動経験がなくても心配いりません。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <div><span class="faq-q-label">Q.</span>費用はどのくらいかかりますか？</div>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>月々の部費と合宿費が主な費用です。ヨットや備品は部のものを使用するため、個人で高額な道具を購入する必要はありません。詳しくはお問い合わせください。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <div><span class="faq-q-label">Q.</span>学業との両立はできますか？</div>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>活動は主に週末が中心のため、平日の授業にはしっかり出られます。テスト期間には部活を休むことも可能で、文武両道を実現している部員が多いです。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <div><span class="faq-q-label">Q.</span>泳げなくても入れますか？</div>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>ライフジャケットを必ず着用するので、泳ぎに自信がなくても問題ありません。安全管理は徹底していますのでご安心ください。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <div><span class="faq-q-label">Q.</span>練習場所はどこですか？</div>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>主な練習場所は神奈川県の葉山・逗子エリアの海です。大学からのアクセスも良く、美しい海で練習ができます。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <div><span class="faq-q-label">Q.</span>体験乗船はできますか？</div>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>はい！新歓期間中はもちろん、それ以外の時期でも体験乗船を随時受け付けています。まずは一度、海に出てみてください！</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave: FAQ → Gallery -->
+  <div class="wave-divider wave-gallery" style="background: #ffffff;">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,25 C240,55 480,5 720,40 C960,15 1200,50 1440,20 L1440,60 L0,60 Z" fill="var(--gray-bg)"/>
+    </svg>
+  </div>
+
+  <!-- ===== Gallery ===== -->
+  <section class="section section-alt" id="gallery">
+    <div class="container fade-in">
+      <div class="section-header">
+        <p class="section-label">Gallery</p>
+        <h2 class="section-title">ギャラリー</h2>
+        <div class="yellow-line"></div>
+      </div>
+      <div class="gallery-wrapper">
+        <button class="gallery-arrow gallery-prev" onclick="galleryPrev()" aria-label="前へ">&lsaquo;</button>
+        <div class="gallery-slider" id="gallerySlider">
+          <div class="gallery-card active">
+            <div class="gallery-card-inner">⛵</div>
+            <p class="gallery-card-caption">海上での練習風景</p>
+          </div>
+          <div class="gallery-card">
+            <div class="gallery-card-inner">🌊</div>
+            <p class="gallery-card-caption">レース本番</p>
+          </div>
+          <div class="gallery-card">
+            <div class="gallery-card-inner">🏆</div>
+            <p class="gallery-card-caption">表彰式</p>
+          </div>
+          <div class="gallery-card">
+            <div class="gallery-card-inner">👥</div>
+            <p class="gallery-card-caption">チーム集合写真</p>
+          </div>
+          <div class="gallery-card">
+            <div class="gallery-card-inner">🌅</div>
+            <p class="gallery-card-caption">合宿の思い出</p>
+          </div>
+          <div class="gallery-card">
+            <div class="gallery-card-inner">🎉</div>
+            <p class="gallery-card-caption">新歓イベント</p>
+          </div>
+        </div>
+        <button class="gallery-arrow gallery-next" onclick="galleryNext()" aria-label="次へ">&rsaquo;</button>
+      </div>
+      <div class="gallery-counter" id="galleryCounter">1 / 6</div>
+      <p style="text-align: center; margin-top: 16px; color: var(--text-light); font-size: 0.85rem;">※ 実際の活動写真に差し替えてください</p>
+    </div>
+  </section>
+
+  <!-- Wave: Gallery → Access -->
+  <div class="wave-divider wave-gallery" style="background: var(--gray-bg);">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,15 C360,50 720,10 1080,45 C1260,30 1380,50 1440,35 L1440,60 L0,60 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+
+  <!-- ===== Access ===== -->
+  <section class="section" id="access">
+    <div class="container fade-in">
+      <div class="section-header">
+        <p class="section-label">Access</p>
+        <h2 class="section-title">アクセス</h2>
+        <div class="yellow-line"></div>
+      </div>
+      <div class="access-grid">
+        <div class="access-info">
+          <h3>活動拠点情報</h3>
+          <div class="access-detail">
+            <div class="access-icon">🏫</div>
+            <div class="access-detail-text">
+              <h4>大学</h4>
+              <p>東京経済大学<br>〒185-8502 東京都国分寺市南町1-7-34</p>
+            </div>
+          </div>
+          <div class="access-detail">
+            <div class="access-icon">⛵</div>
+            <div class="access-detail-text">
+              <h4>練習場所</h4>
+              <p>葉山・逗子エリア<br>神奈川県三浦郡葉山町</p>
+            </div>
+          </div>
+          <div class="access-detail">
+            <div class="access-icon">🕐</div>
+            <div class="access-detail-text">
+              <h4>活動日</h4>
+              <p>主に土曜・日曜<br>（平日は大学でミーティング等）</p>
+            </div>
+          </div>
+          <div class="access-detail">
+            <div class="access-icon">📧</div>
+            <div class="access-detail-text">
+              <h4>お問い合わせ</h4>
+              <p>SNSのDMまたはメールにて<br>お気軽にご連絡ください</p>
+            </div>
+          </div>
+        </div>
+        <div class="access-map">
+          <div class="access-map-placeholder">
+            <span>📍</span>
+            <p>Google Maps埋め込み<br>エリアをここに配置</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave: Access → CTA -->
+  <div class="wave-divider" style="background: #ffffff;">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 C360,55 720,5 1080,35 C1260,50 1380,20 1440,40 L1440,60 L0,60 Z" fill="#f0f9ff"/>
+    </svg>
+  </div>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta-section" id="contact">
+    <div class="container fade-in">
+      <h2>まずは体験してみませんか？</h2>
+      <p>体験乗船は無料！手ぶらで参加OK。<br>ヨットに少しでも興味があれば、ぜひ一度海に出てみてください。</p>
+      <div class="hero-buttons">
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="btn btn-accent">📱 Instagramで連絡する</a>
+        <a href="https://twitter.com/" target="_blank" rel="noopener" class="btn btn-secondary">🐦 X (Twitter) を見る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wave: CTA → Footer (〜〜 shape) -->
+  <div class="wave-divider wave-footer" style="background: #f0f9ff;">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,60 C180,10 360,100 540,50 C720,0 900,90 1080,40 C1260,0 1380,70 1440,50 L1440,120 L0,120 Z" fill="#0d1f2d"/>
+    </svg>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>TKU SAILING CLUB</h3>
+        <p>東京経済大学 体育会ヨット部<br>Tokyo Keizai University Sailing Team</p>
+        <div class="footer-sns">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener" title="Instagram">📷</a>
+          <a href="https://twitter.com/" target="_blank" rel="noopener" title="X (Twitter)">🐦</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>メニュー</h4>
+        <a href="#about">部の紹介</a>
+        <a href="#yacht">ヨットとは</a>
+        <a href="#schedule">年間予定</a>
+        <a href="#voices">部員の声</a>
+        <a href="#faq">Q&A</a>
+        <a href="#access">アクセス</a>
+      </div>
+      <div class="footer-links">
+        <h4>関連リンク</h4>
+        <a href="https://www.tku.ac.jp/" target="_blank" rel="noopener">東京経済大学 公式サイト</a>
+        <a href="https://kantogakuren.org/" target="_blank" rel="noopener">関東学生ヨット連盟</a>
+        <a href="https://www.zennihon201809.com/" target="_blank" rel="noopener">全日本学生ヨット連盟</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 東京経済大学 体育会ヨット部. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ===== Scripts ===== -->
+  <script>
+    // Scroll Header Effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile Menu
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+      document.getElementById('hamburger').classList.toggle('active');
+    }
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+        document.getElementById('hamburger').classList.remove('active');
+      });
+    });
+
+    // FAQ Toggle
+    function toggleFaq(el) {
+      const item = el.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    }
+
+    // Hero Slideshow
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.slideshow-dot');
+    function goToSlide(index) {
+      slides[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+    setInterval(() => {
+      goToSlide((currentSlide + 1) % slides.length);
+    }, 4000);
+
+    // Gallery Slider (fade mode)
+    const galleryCards = document.querySelectorAll('.gallery-card');
+    const galleryCounter = document.getElementById('galleryCounter');
+    let galleryIndex = 0;
+
+    function updateGallery() {
+      galleryCards.forEach((card, i) => {
+        card.classList.toggle('active', i === galleryIndex);
+      });
+      galleryCounter.textContent = (galleryIndex + 1) + ' / ' + galleryCards.length;
+    }
+    function galleryNext() {
+      galleryIndex = galleryIndex >= galleryCards.length - 1 ? 0 : galleryIndex + 1;
+      updateGallery();
+    }
+    function galleryPrev() {
+      galleryIndex = galleryIndex <= 0 ? galleryCards.length - 1 : galleryIndex - 1;
+      updateGallery();
+    }
+
+    // Fade-in on Scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
