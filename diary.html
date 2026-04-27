@@ -749,15 +749,19 @@
           if (!title && !body) continue;
           let author = initials || '匿名';
           if (year) author += ' / ' + year;
+          // Convert "2026/04/27 13:47:16" → "2026-04-27T13:47:16" for reliable sorting
+          const sortKey = timestamp ? timestamp.replace(/\//g, '-').replace(' ', 'T') : '';
           entries.push({
             author: author,
             title: title || '（無題）',
             body: body || '',
             photos: photos,
-            date: timestamp ? timestamp.split(' ')[0].replace(/\//g, '-') : ''
+            date: timestamp ? timestamp.split(' ')[0].replace(/\//g, '-') : '',
+            _sortKey: sortKey
           });
         }
-        return entries.sort((a, b) => new Date(b.date) - new Date(a.date));
+        // newest first by full timestamp
+        return entries.sort((a, b) => (b._sortKey || '').localeCompare(a._sortKey || ''));
       } catch (e) {
         console.error('日記の取得に失敗:', e);
         return null;
