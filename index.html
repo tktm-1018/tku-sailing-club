@@ -275,14 +275,26 @@
       margin-bottom: 12px;
     }
     .hero-slide-caption {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--primary-dark);
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: rgba(13, 31, 45, 0.6);
+      padding: 6px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+      z-index: 2;
     }
-    .hero-slide:nth-child(1) { background: #dff0fb; }
-    .hero-slide:nth-child(2) { background: #d4ecf9; }
-    .hero-slide:nth-child(3) { background: #e3f2fd; }
-    .hero-slide:nth-child(4) { background: #d9eef9; }
+    .hero-slide img, .hero-slide video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
     .slideshow-dots {
       display: flex;
       justify-content: center;
@@ -736,6 +748,14 @@
       align-items: center;
       justify-content: center;
       font-size: 5rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-card-inner img, .gallery-card-inner video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     .gallery-card:nth-child(even) .gallery-card-inner {
       background: #f5f5f5;
@@ -827,16 +847,15 @@
       overflow: hidden;
       background: #f0f9ff;
       aspect-ratio: 4 / 3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       box-shadow: var(--shadow);
+      position: relative;
     }
-    .access-map-placeholder {
-      text-align: center;
-      color: var(--primary-dark);
+    .access-map iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
     }
-    .access-map-placeholder span { font-size: 3rem; display: block; margin-bottom: 12px; }
 
     /* ===== CTA ===== */
     .cta-section .container { position: relative; z-index: 1; }
@@ -911,17 +930,22 @@
       margin-top: 20px;
     }
     .footer-sns a {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
-      transition: background 0.3s;
+      color: #ffffff;
+      transition: background 0.3s, transform 0.2s;
     }
-    .footer-sns a:hover { background: var(--primary); }
+    .footer-sns a:hover { background: var(--primary); transform: translateY(-2px); }
+    .footer-sns a svg { width: 22px; height: 22px; fill: currentColor; }
+    .footer-sns a.instagram:hover {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+    .footer-sns a.x-twitter:hover { background: #000000; }
     .footer-bottom {
       max-width: 1100px;
       margin: 24px auto 0;
@@ -1117,9 +1141,9 @@
         position: fixed;
         top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(255, 255, 255, 0.98);
+        width: 100vw;
+        height: 100vh;
+        background: #ffffff;
         justify-content: center;
         align-items: center;
         gap: 24px;
@@ -1174,7 +1198,9 @@
       .hero-buttons { flex-direction: column; align-items: center; }
       .cta-section::after { display: none; }
       .cta-section { padding: 64px 40px; }
-      .footer { padding: 60px 40px 32px; }
+      .footer { padding: 60px 40px 32px; text-align: center; }
+      .footer-brand, .footer-links { text-align: center; }
+      .footer-sns { justify-content: center; }
       .gallery-wrapper {
         flex-direction: column;
         gap: 0;
@@ -1215,6 +1241,7 @@
         <a href="#yacht">ヨットとは</a>
         <a href="#schedule">年間予定</a>
         <a href="#voices">部員の声</a>
+        <a href="diary.html">部員日記</a>
         <a href="#faq">Q&A</a>
         <a href="#access">アクセス</a>
         <a href="#contact" class="nav-cta">体験申込</a>
@@ -1247,31 +1274,8 @@
       </div>
     </div>
     <div class="hero-right">
-      <div class="hero-slideshow" id="heroSlideshow">
-<div class="hero-slide active">
-          <div class="hero-slide-icon">⛵</div>
-          <p class="hero-slide-caption">海上での練習風景</p>
-        </div>
-        <div class="hero-slide">
-          <div class="hero-slide-icon">🌊</div>
-          <p class="hero-slide-caption">レース大会</p>
-        </div>
-        <div class="hero-slide">
-          <div class="hero-slide-icon">👥</div>
-          <p class="hero-slide-caption">チーム集合写真</p>
-        </div>
-        <div class="hero-slide">
-          <div class="hero-slide-icon">🏆</div>
-          <p class="hero-slide-caption">表彰式</p>
-        </div>
-      </div>
-      <div class="slideshow-dots" id="slideshowDots">
-        <button class="slideshow-dot active" onclick="goToSlide(0)"></button>
-        <button class="slideshow-dot" onclick="goToSlide(1)"></button>
-        <button class="slideshow-dot" onclick="goToSlide(2)"></button>
-        <button class="slideshow-dot" onclick="goToSlide(3)"></button>
-      </div>
-      <p class="hero-slide-note">※ 実際の活動写真に差し替えてください</p>
+      <div class="hero-slideshow" id="heroSlideshow"></div>
+      <div class="slideshow-dots" id="slideshowDots"></div>
     </div>
     <div class="ocean-bubbles">
       <div class="bubble"></div>
@@ -1304,10 +1308,7 @@
       </div>
       <div class="about-grid">
         <div class="about-image">
-          <div class="about-image-placeholder">
-            <div class="sailing-icon">⛵</div>
-            <p>活動風景の写真をここに配置</p>
-          </div>
+          <img src="media/yacht1.jpg" alt="ヨット部の活動風景" style="width:100%; height:100%; object-fit:cover;">
         </div>
         <div class="about-text">
           <h3>大学から始める<br><span>新しい挑戦</span>のカタチ</h3>
@@ -1371,43 +1372,43 @@
       <div class="schedule-grid">
         <div class="schedule-card highlight">
           <div class="schedule-month">Apr</div>
-          <h4>🌸 新歓期間</h4>
+          <h4>🌸 新歓</h4>
           <p>体験乗船会・新入生歓迎イベント</p>
         </div>
-        <div class="schedule-card">
-          <div class="schedule-month">May - Jun</div>
-          <h4>⛵ 春季練習</h4>
-          <p>基礎練習・春季レガッタ</p>
+        <div class="schedule-card highlight">
+          <div class="schedule-month">May (GW)</div>
+          <h4>🏆 春インカレ</h4>
+          <p>春季ヨット選手権</p>
         </div>
         <div class="schedule-card">
-          <div class="schedule-month">Jul - Aug</div>
+          <div class="schedule-month">Jul 下旬 〜 Sep 初旬</div>
           <h4>☀️ 夏合宿</h4>
-          <p>集中練習・夏季大会</p>
+          <p>3〜4日サイクルの集中練習</p>
         </div>
         <div class="schedule-card">
-          <div class="schedule-month">Sep</div>
-          <h4>🏆 秋季大会</h4>
-          <p>関東学生ヨット選手権</p>
+          <div class="schedule-month">Aug</div>
+          <h4>🤝 OB総会</h4>
+          <p>OB・OGとの交流</p>
         </div>
         <div class="schedule-card highlight">
-          <div class="schedule-month">Oct - Nov</div>
-          <h4>🎌 全日本インカレ</h4>
-          <p>全国の舞台を目指す！</p>
+          <div class="schedule-month">Sep 下旬 〜 Oct 初旬</div>
+          <h4>🎌 秋インカレ</h4>
+          <p>秋季ヨット選手権</p>
         </div>
         <div class="schedule-card">
           <div class="schedule-month">Dec</div>
-          <h4>🎄 納会・冬季練習</h4>
-          <p>1年の振り返り・オフトレ</p>
+          <h4>🎄 納会</h4>
+          <p>1年の振り返り</p>
         </div>
         <div class="schedule-card">
-          <div class="schedule-month">Jan - Feb</div>
-          <h4>💪 冬季トレーニング</h4>
-          <p>体力作り・座学・整備</p>
+          <div class="schedule-month">Feb 中旬 〜 Mar</div>
+          <h4>🌊 春合宿</h4>
+          <p>3〜4日サイクルの集中練習</p>
         </div>
         <div class="schedule-card">
           <div class="schedule-month">Mar</div>
-          <h4>🌅 春季レガッタ</h4>
-          <p>シーズン開幕・遠征</p>
+          <h4>🌸 追い出しコンパ</h4>
+          <p>4年生の卒業を祝う</p>
         </div>
       </div>
     </div>
@@ -1494,7 +1495,7 @@
             <span class="faq-toggle">+</span>
           </div>
           <div class="faq-answer">
-            <p>月々の部費と合宿費が主な費用です。ヨットや備品は部のものを使用するため、個人で高額な道具を購入する必要はありません。詳しくはお問い合わせください。</p>
+            <p>月々の部費と合宿費、交通費は自費負担となりますが、入部初年度は部費は徴収しておりません。ヨットや備品は部のものを使用するため、個人で高額な道具を購入する必要はありません。詳しくはお問い合わせください。</p>
           </div>
         </div>
         <div class="faq-item">
@@ -1521,7 +1522,7 @@
             <span class="faq-toggle">+</span>
           </div>
           <div class="faq-answer">
-            <p>主な練習場所は神奈川県の葉山・逗子エリアの海です。大学からのアクセスも良く、美しい海で練習ができます。</p>
+            <p>主な練習場所は神奈川県藤沢市の江ノ島ヨットハーバーです。美しい海で練習ができます。</p>
           </div>
         </div>
         <div class="faq-item">
@@ -1554,36 +1555,10 @@
       </div>
       <div class="gallery-wrapper">
         <button class="gallery-arrow gallery-prev" onclick="galleryPrev()" aria-label="前へ">&lsaquo;</button>
-        <div class="gallery-slider" id="gallerySlider">
-          <div class="gallery-card active">
-            <div class="gallery-card-inner">⛵</div>
-            <p class="gallery-card-caption">海上での練習風景</p>
-          </div>
-          <div class="gallery-card">
-            <div class="gallery-card-inner">🌊</div>
-            <p class="gallery-card-caption">レース本番</p>
-          </div>
-          <div class="gallery-card">
-            <div class="gallery-card-inner">🏆</div>
-            <p class="gallery-card-caption">表彰式</p>
-          </div>
-          <div class="gallery-card">
-            <div class="gallery-card-inner">👥</div>
-            <p class="gallery-card-caption">チーム集合写真</p>
-          </div>
-          <div class="gallery-card">
-            <div class="gallery-card-inner">🌅</div>
-            <p class="gallery-card-caption">合宿の思い出</p>
-          </div>
-          <div class="gallery-card">
-            <div class="gallery-card-inner">🎉</div>
-            <p class="gallery-card-caption">新歓イベント</p>
-          </div>
-        </div>
+        <div class="gallery-slider" id="gallerySlider"></div>
         <button class="gallery-arrow gallery-next" onclick="galleryNext()" aria-label="次へ">&rsaquo;</button>
       </div>
-      <div class="gallery-counter" id="galleryCounter">1 / 6</div>
-      <p style="text-align: center; margin-top: 16px; color: var(--text-light); font-size: 0.85rem;">※ 実際の活動写真に差し替えてください</p>
+      <div class="gallery-counter" id="galleryCounter"></div>
     </div>
   </section>
 
@@ -1616,7 +1591,7 @@
             <div class="access-icon">⛵</div>
             <div class="access-detail-text">
               <h4>練習場所</h4>
-              <p>葉山・逗子エリア<br>神奈川県三浦郡葉山町</p>
+              <p>江ノ島ヨットハーバー<br>神奈川県藤沢市江の島</p>
             </div>
           </div>
           <div class="access-detail">
@@ -1635,10 +1610,12 @@
           </div>
         </div>
         <div class="access-map">
-          <div class="access-map-placeholder">
-            <span>📍</span>
-            <p>Google Maps埋め込み<br>エリアをここに配置</p>
-          </div>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1626.5!2d139.4805!3d35.2998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60184320aa5ce405%3A0x66e3c7d45e2abf57!2z5rGf44OO5bO544Oo44OD44OI44OP44O844OQ44O8!5e0!3m2!1sja!2sjp!4v1714201200000!5m2!1sja!2sjp"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            title="江ノ島ヨットハーバーの地図"></iframe>
         </div>
       </div>
     </div>
@@ -1657,8 +1634,8 @@
       <h2>まずは体験してみませんか？</h2>
       <p>体験乗船は無料！手ぶらで参加OK。<br>ヨットに少しでも興味があれば、ぜひ一度海に出てみてください。</p>
       <div class="hero-buttons">
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="btn btn-accent">📱 Instagramで連絡する</a>
-        <a href="https://twitter.com/" target="_blank" rel="noopener" class="btn btn-secondary">🐦 X (Twitter) を見る</a>
+        <a href="https://www.instagram.com/tku_yacht470?igsh=aGx3c2RpZjllcHpt" target="_blank" rel="noopener" class="btn btn-accent">Instagramで連絡する</a>
+        <a href="https://twitter.com/" target="_blank" rel="noopener" class="btn btn-secondary">X (Twitter) を見る</a>
       </div>
     </div>
   </section>
@@ -1677,8 +1654,12 @@
         <h3>TKU SAILING CLUB</h3>
         <p>東京経済大学 体育会ヨット部<br>Tokyo Keizai University Sailing Team</p>
         <div class="footer-sns">
-          <a href="https://www.instagram.com/" target="_blank" rel="noopener" title="Instagram">📷</a>
-          <a href="https://twitter.com/" target="_blank" rel="noopener" title="X (Twitter)">🐦</a>
+          <a href="https://www.instagram.com/tku_yacht470?igsh=aGx3c2RpZjllcHpt" target="_blank" rel="noopener" class="instagram" title="Instagram" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://twitter.com/" target="_blank" rel="noopener" class="x-twitter" title="X (Twitter)" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
         </div>
       </div>
       <div class="footer-links">
@@ -1687,6 +1668,7 @@
         <a href="#yacht">ヨットとは</a>
         <a href="#schedule">年間予定</a>
         <a href="#voices">部員の声</a>
+        <a href="diary.html">部員日記</a>
         <a href="#faq">Q&A</a>
         <a href="#access">アクセス</a>
       </div>
@@ -1696,9 +1678,6 @@
         <a href="https://kantogakuren.org/" target="_blank" rel="noopener">関東学生ヨット連盟</a>
         <a href="https://www.zennihon201809.com/" target="_blank" rel="noopener">全日本学生ヨット連盟</a>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 東京経済大学 体育会ヨット部. All Rights Reserved.</p>
     </div>
   </footer>
 
@@ -1729,7 +1708,44 @@
       if (!wasOpen) item.classList.add('open');
     }
 
-    // Hero Slideshow
+    // ===== Photo pool: all images in media folder =====
+    const ALL_PHOTOS = [
+      'media/yacht1.jpg','media/yacht2.jpg','media/yacht3.jpg',
+      'media/IMG_4790.jpg','media/IMG_4791.jpg','media/IMG_4792.jpg','media/IMG_4793.jpg','media/IMG_4794.jpg',
+      'media/IMG_4795.jpg','media/IMG_4796.jpg','media/IMG_4797.jpg','media/IMG_4798.jpg','media/IMG_4799.jpg',
+      'media/IMG_4800.jpg','media/IMG_4801.jpg','media/IMG_4802.jpg','media/IMG_4803.jpg','media/IMG_4804.jpg',
+      'media/IMG_4805.jpg','media/IMG_4806.jpg','media/IMG_4807.jpg','media/IMG_4808.jpg','media/IMG_4809.jpg',
+      'media/IMG_4811.jpg','media/IMG_4812.jpg','media/IMG_4813.jpg','media/IMG_4814.jpg','media/IMG_4815.jpg',
+      'media/IMG_4816.jpg','media/IMG_4817.jpg','media/IMG_4818.jpg','media/IMG_4819.jpg','media/IMG_4820.jpg',
+      'media/IMG_4821.jpg','media/IMG_4825.jpg','media/IMG_4827.jpg','media/IMG_4828.jpg','media/IMG_4829.jpg',
+      'media/IMG_4830.jpg','media/IMG_4831.jpg','media/IMG_4832.jpg','media/IMG_4833.jpg','media/IMG_4834.jpg',
+      'media/IMG_4835.jpg','media/IMG_4836.jpg','media/IMG_4837.jpg','media/IMG_4838.jpg','media/IMG_4839.jpg',
+      'media/IMG_4840.jpg','media/IMG_4841.jpg','media/IMG_4842.jpg','media/IMG_4843.jpg','media/IMG_4844.jpg',
+      'media/IMG_4845.jpg','media/IMG_4846.jpg','media/IMG_4847.jpg','media/IMG_4848.jpg','media/IMG_4849.jpg',
+      'media/IMG_4850.jpg'
+    ];
+
+    function shuffleArray(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    // ===== Build Hero Slideshow (5 random photos) =====
+    const heroSlideshow = document.getElementById('heroSlideshow');
+    const slideshowDots = document.getElementById('slideshowDots');
+    const heroPhotos = shuffleArray(ALL_PHOTOS).slice(0, 5);
+    heroSlideshow.innerHTML = heroPhotos.map((src, i) =>
+      `<div class="hero-slide${i === 0 ? ' active' : ''}"><img src="${src}" alt="ヨット部の活動"></div>`
+    ).join('');
+    slideshowDots.innerHTML = heroPhotos.map((_, i) =>
+      `<button class="slideshow-dot${i === 0 ? ' active' : ''}" onclick="goToSlide(${i})"></button>`
+    ).join('');
+
+    // Hero Slideshow (cycle through random selection)
     let currentSlide = 0;
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.slideshow-dot');
@@ -1744,6 +1760,13 @@
       goToSlide((currentSlide + 1) % slides.length);
     }, 4000);
 
+    // ===== Build Gallery (10 random photos) =====
+    const gallerySlider = document.getElementById('gallerySlider');
+    const galleryPhotos = shuffleArray(ALL_PHOTOS).slice(0, 10);
+    gallerySlider.innerHTML = galleryPhotos.map((src, i) =>
+      `<div class="gallery-card${i === 0 ? ' active' : ''}"><div class="gallery-card-inner"><img src="${src}" alt="ヨット部の活動"></div></div>`
+    ).join('');
+
     // Gallery Slider (fade mode)
     const galleryCards = document.querySelectorAll('.gallery-card');
     const galleryCounter = document.getElementById('galleryCounter');
@@ -1755,6 +1778,7 @@
       });
       galleryCounter.textContent = (galleryIndex + 1) + ' / ' + galleryCards.length;
     }
+    updateGallery();
     function galleryNext() {
       galleryIndex = galleryIndex >= galleryCards.length - 1 ? 0 : galleryIndex + 1;
       updateGallery();
