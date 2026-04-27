@@ -242,7 +242,7 @@
       position: relative;
       border-radius: 0 20px 20px 0;
       overflow: hidden;
-      aspect-ratio: 5 / 4;
+      aspect-ratio: 16 / 9;
       background: #e8f4fd;
     }
     .hero-slideshow::before {
@@ -251,8 +251,8 @@
       top: 0;
       left: 0;
       bottom: 0;
-      width: 80px;
-      background: linear-gradient(to right, #ffffff, transparent);
+      width: 200px;
+      background: linear-gradient(to right, #ffffff 0%, rgba(255,255,255,0.7) 50%, transparent 100%);
       z-index: 1;
       pointer-events: none;
     }
@@ -1727,42 +1727,43 @@
       return a;
     }
 
+    // Preload an image and resolve true if it loads, false if it fails
+    function preloadImage(src) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = src;
+      });
+    }
+
+    // Validate which photos are actually loadable
+    async function getValidPhotos() {
+      const results = await Promise.all(ALL_PHOTOS.map(async src => ({ src, ok: await preloadImage(src) })));
+      const valid = results.filter(r => r.ok).map(r => r.src);
+      return valid.length > 0 ? valid : ALL_PHOTOS;
+    }
+
     // ===== Build Hero Slideshow (5 random photos) =====
     const heroSlideshow = document.getElementById('heroSlideshow');
     const slideshowDots = document.getElementById('slideshowDots');
-    const heroPhotos = shuffleArray(ALL_PHOTOS).slice(0, 5);
-    heroSlideshow.innerHTML = heroPhotos.map((src, i) =>
-      `<div class="hero-slide${i === 0 ? ' active' : ''}"><img src="${src}" alt="ヨット部の活動"></div>`
-    ).join('');
-    slideshowDots.innerHTML = heroPhotos.map((_, i) =>
-      `<button class="slideshow-dot${i === 0 ? ' active' : ''}" onclick="goToSlide(${i})"></button>`
-    ).join('');
-
-    // Hero Slideshow (cycle through random selection)
     let currentSlide = 0;
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.slideshow-dot');
+    let slides = [];
+    let dots = [];
+
     function goToSlide(index) {
+      if (!slides.length) return;
       slides[currentSlide].classList.remove('active');
       dots[currentSlide].classList.remove('active');
       currentSlide = index;
       slides[currentSlide].classList.add('active');
       dots[currentSlide].classList.add('active');
     }
-    setInterval(() => {
-      goToSlide((currentSlide + 1) % slides.length);
-    }, 4000);
 
     // ===== Build Gallery (10 random photos) =====
     const gallerySlider = document.getElementById('gallerySlider');
-    const galleryPhotos = shuffleArray(ALL_PHOTOS).slice(0, 10);
-    gallerySlider.innerHTML = galleryPhotos.map((src, i) =>
-      `<div class="gallery-card${i === 0 ? ' active' : ''}"><div class="gallery-card-inner"><img src="${src}" alt="ヨット部の活動"></div></div>`
-    ).join('');
-
-    // Gallery Slider (fade mode)
-    const galleryCards = document.querySelectorAll('.gallery-card');
     const galleryCounter = document.getElementById('galleryCounter');
+    let galleryCards = [];
     let galleryIndex = 0;
 
     function updateGallery() {
@@ -1771,15 +1772,47 @@
       });
       galleryCounter.textContent = (galleryIndex + 1) + ' / ' + galleryCards.length;
     }
-    updateGallery();
     function galleryNext() {
+      if (!galleryCards.length) return;
       galleryIndex = galleryIndex >= galleryCards.length - 1 ? 0 : galleryIndex + 1;
       updateGallery();
     }
     function galleryPrev() {
+      if (!galleryCards.length) return;
       galleryIndex = galleryIndex <= 0 ? galleryCards.length - 1 : galleryIndex - 1;
       updateGallery();
     }
+
+    // Initialize media after preloading to avoid blank slides
+    (async function initMedia() {
+      const validPhotos = await getValidPhotos();
+
+      // Hero (up to 5)
+      const heroCount = Math.min(5, validPhotos.length);
+      const heroPhotos = shuffleArray(validPhotos).slice(0, heroCount);
+      heroSlideshow.innerHTML = heroPhotos.map((src, i) =>
+        `<div class="hero-slide${i === 0 ? ' active' : ''}"><img src="${src}" alt="ヨット部の活動" loading="eager" onerror="this.parentElement.style.display='none'"></div>`
+      ).join('');
+      slideshowDots.innerHTML = heroPhotos.map((_, i) =>
+        `<button class="slideshow-dot${i === 0 ? ' active' : ''}" onclick="goToSlide(${i})"></button>`
+      ).join('');
+      slides = document.querySelectorAll('.hero-slide');
+      dots = document.querySelectorAll('.slideshow-dot');
+
+      // Gallery (up to 10, can repeat if pool < 10)
+      const galleryCount = Math.min(10, validPhotos.length);
+      const galleryPhotos = shuffleArray(validPhotos).slice(0, galleryCount);
+      gallerySlider.innerHTML = galleryPhotos.map((src, i) =>
+        `<div class="gallery-card${i === 0 ? ' active' : ''}"><div class="gallery-card-inner"><img src="${src}" alt="ヨット部の活動" loading="lazy" onerror="this.parentElement.parentElement.style.display='none'"></div></div>`
+      ).join('');
+      galleryCards = document.querySelectorAll('.gallery-card');
+      updateGallery();
+
+      // Start auto-rotation only after slides exist
+      if (slides.length > 0) {
+        setInterval(() => goToSlide((currentSlide + 1) % slides.length), 4000);
+      }
+    })();
 
     // Fade-in on Scroll
     const observer = new IntersectionObserver((entries) => {
