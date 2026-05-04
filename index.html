@@ -172,6 +172,9 @@
     .hero-right .hero-slideshow { flex: 1; }
     .hero-badge {
       display: inline-block;
+      align-self: flex-start;
+      width: fit-content;
+      max-width: 100%;
       background: var(--accent-dark);
       color: #ffffff;
       padding: 6px 18px;
@@ -1179,6 +1182,7 @@
         align-items: center;
       }
       .hero-left { align-items: center; }
+      .hero-badge { align-self: center; }
       .hero-right { padding-top: 0; }
       .hero-slideshow { border-radius: 16px; aspect-ratio: 4 / 3; }
       .hero-slideshow::before { display: none; }
