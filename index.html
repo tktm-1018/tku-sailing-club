@@ -156,6 +156,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
+      align-items: flex-start;
       gap: 0;
     }
     .hero-left .hero-buttons { margin-top: auto; }
@@ -1148,6 +1149,11 @@
 
     /* ===== Responsive ===== */
     @media (max-width: 900px) {
+      body, p, h1, h2, h3, h4, h5, h6, span, div, a, li, label, button {
+        word-break: auto-phrase;
+        overflow-wrap: break-word;
+        line-break: strict;
+      }
       .nav-links { display: none; }
       .nav-links.open {
         display: flex;
@@ -1172,6 +1178,7 @@
         text-align: center;
         align-items: center;
       }
+      .hero-left { align-items: center; }
       .hero-right { padding-top: 0; }
       .hero-slideshow { border-radius: 16px; aspect-ratio: 4 / 3; }
       .hero-slideshow::before { display: none; }
