@@ -17,6 +17,9 @@
       color: #333;
       line-height: 1.8;
       overflow-x: hidden;
+      word-break: auto-phrase;
+      overflow-wrap: break-word;
+      line-break: strict;
     }
     img { max-width: 100%; height: auto; display: block; }
     a { text-decoration: none; color: inherit; }
@@ -1151,11 +1154,6 @@
 
     /* ===== Responsive ===== */
     @media (max-width: 900px) {
-      body, p, h1, h2, h3, h4, h5, h6, span, div, a, li, label, button {
-        word-break: auto-phrase;
-        overflow-wrap: break-word;
-        line-break: strict;
-      }
       .nav-links { display: none; }
       .nav-links.open {
         display: flex;
